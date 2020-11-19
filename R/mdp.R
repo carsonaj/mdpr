@@ -59,13 +59,16 @@ get_mins <- function(states, actions, prob_fn, cost_fn, optim_vals, s){
 #==========================================================================================
 
 get_expectation <- function(states, prob_fn, time, cost_fn, optim_vals, s, a) {
+  # initialize costs and transition probabilities
   costs <- rep(0, length(states))
   probs <- rep(0, length(states))
 
+  # get costs and transition probabilities
   for (i in 1:length(states)) {
     costs[i] <- cost_fn(time, s, a, states[i]) + optim_vals[time + 1, i]
     probs[i] <- prob_fn(s, a, states[i])
   }
+  # compute expected cost
   expected <- as.numeric(crossprod(costs, probs))
 
   return(expected)
