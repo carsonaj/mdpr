@@ -3,7 +3,7 @@ Type: Package
 Title: Calculate the minimal policy for a finite-horizon Markov decision process.
 Version: 0.1.0
 Author: person("Carson", "James", email = "carson.a.james@gmail.com", role = c("aut", "cre"))
-Maintainer: The package maintainer carson.a.james@gmail.com
+Maintainer: Carson James <carson.a.james@gmail.com>
 Description: Uses a dynamic programming algorithm known as "value iteration" to 
     choose an optimal policy for a finite horizon Markov decision process with 
     finite states and actions.
