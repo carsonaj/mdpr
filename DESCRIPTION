@@ -6,7 +6,7 @@ Author: person("Carson", "James", email = "carson.a.james@gmail.com", role = c("
 Maintainer: Carson James <carson.a.james@gmail.com>
 Description: Uses a dynamic programming algorithm known as "value iteration" to 
     choose an optimal policy for a finite horizon Markov decision process with 
-    finite states and actions.
+    finitely many states and actions.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
