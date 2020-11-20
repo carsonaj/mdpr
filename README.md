@@ -13,7 +13,7 @@ Background: A Markov decision process (MDP) is:
 
 Goal: Find an optimal policy for a Markov decision process that minimizes the cost.
 
-Functionality: I will implement a dynamic programming algorithm called “value iteration” that uses the Bellman equation to find an optimal policy by going backwards inductively. As many loops are required, I will be implementing much of the code in C++ using the armadillo package.
+Functionality: I will implement a dynamic programming algorithm called “value iteration” that uses the Bellman equation to find an optimal policy by going backwards inductively. 
 
 A deeper explanation of the background and the algorithm is given here: https://github.com/carsonaj/Math/blob/master/Optimization/Markov%20Decision%20Processes.pdf
 
