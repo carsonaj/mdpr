@@ -38,7 +38,7 @@ mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, initial_stat
 #==========================================================================================
 #==========================================================================================
 
-get_mins <- function(states, actions, prob_fn, cost_fn, optim_vals, s){
+get_mins <- function(states, s, actions, prob_fn, time, cost_fn, optim_vals){
   a1 <- actions[1]
   # set min to expectation of cost for state s, action a1
   min_val <- get_expectation(states, prob_fn, time, cost_fn, optim_vals, s, a1)
@@ -46,7 +46,7 @@ get_mins <- function(states, actions, prob_fn, cost_fn, optim_vals, s){
   #iterate over remaining actions
   for (j in 2:length(actions)) {
     a <- actions[j]
-    val <- get_expectation(time, states, prob_fn, time, cost_fn, optim, s, a)
+    val <- get_expectation(time, states, s, a, prob_fn, time, cost_fn, optim)
     if (val < min_val) {
       min_val <- val
       min_arg <- a
@@ -58,7 +58,7 @@ get_mins <- function(states, actions, prob_fn, cost_fn, optim_vals, s){
 #==========================================================================================
 #==========================================================================================
 
-get_expectation <- function(states, prob_fn, time, cost_fn, optim_vals, s, a) {
+get_expectation <- function(states, s, a, prob_fn, time, cost_fn, optim_vals) {
   # initialize costs and transition probabilities
   costs <- rep(0, length(states))
   probs <- rep(0, length(states))
