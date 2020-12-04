@@ -1,4 +1,4 @@
-test_that("get_expectation works", {
+test_that("mdpr works", {
 
   # test for get_expectation:
   states <- c(-1, 1)
@@ -16,11 +16,9 @@ test_that("get_expectation works", {
   a <- 2
 
   expect_equal(get_expectation(states, s, a, prob_fn, time, cost_fn, optim_vals), -.8)
-})
   #===================================================================================
   #===================================================================================
 
-test_that("get_mins works", {
   # test for get_mins:
   states <- 0:1
   s <- 0
@@ -33,9 +31,14 @@ test_that("get_mins works", {
 
   out <- get_mins(states, s, actions, prob_fn, time, cost_fn, optim_vals)
   check.min_arg <- 1
-  check.min_val <- 17/12
+  check.min_val <- 7/6
 
   expect_equal(out$min_arg, check.min_arg)
   expect_equal(out$min_val, check.min_val)
+  #===================================================================================
+  #===================================================================================
+
+  # test for mdp:
+
 
 })
