@@ -27,7 +27,7 @@ mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, initial_stat
       s <- states[i]
       # get available actions
       actions <- action_fn(s)
-      mins <- get_mins(states, actions, prob_fn, cost_fn, optim_vals, s)
+      mins <- get_mins(states, s, actions, prob_fn, cost_fn, optim_vals)
       optim_vals[t, i] <- mins$min_val
       optim_args[t, i] <- mins$min_arg
     }
@@ -41,12 +41,12 @@ mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, initial_stat
 get_mins <- function(states, s, actions, prob_fn, time, cost_fn, optim_vals){
   a1 <- actions[1]
   # set min to expectation of cost for state s, action a1
-  min_val <- get_expectation(states, prob_fn, time, cost_fn, optim_vals, s, a1)
+  min_val <- get_expectation(states, s, a1, prob_fn, time, cost_fn, optim_vals)
   min_arg <- a1
   #iterate over remaining actions
   for (j in 2:length(actions)) {
     a <- actions[j]
-    val <- get_expectation(time, states, s, a, prob_fn, time, cost_fn, optim)
+    val <- get_expectation(states, s, a, prob_fn, time, cost_fn, optim_vals)
     if (val < min_val) {
       min_val <- val
       min_arg <- a
