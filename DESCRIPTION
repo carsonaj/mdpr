@@ -10,8 +10,6 @@ Description: Uses a dynamic programming algorithm known as "value iteration" to
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: Rcpp (>= 1.0.5)
-LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.1
 Suggests: 
     testthat
