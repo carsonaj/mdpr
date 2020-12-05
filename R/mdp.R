@@ -1,37 +1,74 @@
 #' Policy minimizer for Markov decision processes via value iteration
 #'
-#' @param states - vector of states
-#' @param action_fn - function with input: current_state - state and output: possible_actions - vector of actions
-#' @param prob_fn - function with input: (current_state - state, action_taken - action, next_state - state) and output: probability - double in 0 to 1
-#' @param cost_fn - function with input: (time - positive integer less than horizon, current_state - state, action_taken - action, next_state - state) and output: cost
-#' @param final_cost_fn - function with input: current_state - state and output: final_cost - scalar
-#' @param initial_state - state
-#' @param horizon - positive integer
+#' @param states vector of states
+#' @param action_fn function with\cr
+#'     \itemize{
+#'     \item input: \cr
+#'     current_state - state belonging to states\cr
+#'     \item output: actions - vector of allowed actions for current_state
+#'     }
+#' @param prob_fn function with\cr
+#'     \itemize{
+#'     \item input: \cr
+#'     current_state - state in states, \cr
+#'     action_taken - action in actions,\cr
+#'     next_state - state in states, \cr
+#'     \item output: \cr
+#'     probability - scalar in [0, 1]
+#'     }
+#' @param cost_fn function with\cr
+#'     \itemize{
+#'     \item input: \cr
+#'     time - positive integer less than horizon,\cr
+#'     current_state - state in states, \cr
+#'     action_taken - action in actions, \cr
+#'     next_state - state in states,
+#'     \item output: \cr
+#'     cost - scalar
+#'     }
+#' @param final_cost_fn function with \cr
+#'     \itemize{
+#'     \item input: \cr
+#'     current_state - state \cr
+#'     \item output: \cr
+#'     final_cost - scalar
+#'     }
+#' @param initial_state state in states
+#' @param horizon integer greater than 1
 #'
-#' @return policy_fn - function, input: (time - positive integer less than horizon, current_state - state) and output: action_taken - action
+#' @return policy_fn function with \cr
+#'     \itemize{
+#'     \item input: \cr
+#'     time - positive integer less than horizon, \cr
+#'     current_state - state in states \cr
+#'     \item output: \cr
+#'     action_taken - action in actions
+#'     }
 #' @export
 #'
 #' @examples
 mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, initial_state, horizon) {
   optim_vals <- matrix(0, horizon, length(states))
+  optim_args <- matrix(0, horizon - 1, length(states))
   for (j in 1:length(states)) {
     optim_vals[horizon, j] <- final_cost_fn(states[j])
   }
 
-  optim_args <- matrix(0, horizon - 1, length(states))
-
   # iterate over remaining time
-  for (t in (horizon - 1):2) {
+  for (t in (horizon - 1):1) {
     # iterate over states
     for (i in 1:len(states)) {
       s <- states[i]
       # get available actions
       actions <- action_fn(s)
-      mins <- get_mins(states, s, actions, prob_fn, cost_fn, optim_vals)
+      mins <- get_mins(states, s, actions, prob_fn, t, cost_fn, optim_vals)
       optim_vals[t, i] <- mins$min_val
       optim_args[t, i] <- mins$min_arg
     }
   }
+
+  # define policy function
+  policy_fn <- function(t, s) return(optim_args[t, match(s, states)])
 
   return(policy_fn)
 }
