@@ -24,7 +24,7 @@ Find an optimal policy for a Markov decision process that minimizes the cost.
 You can install the mdpr package from github using the following:
 
 ``` r
-# install.packages(devtools)
+# install.packages("devtools")
 library(devtools)
 devtools::install_github("carsonaj/mdpr")
 ```
