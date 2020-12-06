@@ -47,6 +47,18 @@
 #'
 #' @examples
 mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon) {
+  # get optimal arguments
+  optim <- get_optim(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
+
+  # define policy function
+  policy_fn <- function(t, s) return(optim$optim_args[t, match(s, states)])
+
+  return(policy_fn)
+}
+#==========================================================================================
+#==========================================================================================
+
+get_optim <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon) {
   optim_vals <- matrix(0, horizon, length(states))
   optim_args <- matrix(0, horizon - 1, length(states))
   for (j in 1:length(states)) {
@@ -56,36 +68,35 @@ mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon) {
   # iterate over remaining time
   for (t in (horizon - 1):1) {
     # iterate over states
-    for (i in 1:len(states)) {
+    for (i in 1:length(states)) {
       s <- states[i]
       # get available actions
       actions <- action_fn(s)
-      mins <- get_mins(states, s, actions, prob_fn, t, cost_fn, optim_vals)
-      optim_vals[t, i] <- mins$min_val
-      optim_args[t, i] <- mins$min_arg
+      min <- get_min(states, s, actions, prob_fn, t, cost_fn, optim_vals)
+      optim_vals[t, i] <- min$min_val
+      optim_args[t, i] <- min$min_arg
     }
   }
 
-  # define policy function
-  policy_fn <- function(t, s) return(optim_args[t, match(s, states)])
-
-  return(policy_fn)
+  return(list(optim_vals = optim_vals, optim_args = optim_args))
 }
 #==========================================================================================
 #==========================================================================================
 
-get_mins <- function(states, s, actions, prob_fn, time, cost_fn, optim_vals){
+get_min <- function(states, s, actions, prob_fn, time, cost_fn, optim_vals){
   a1 <- actions[1]
   # set min to expectation of cost for state s, action a1
   min_val <- get_expectation(states, s, a1, prob_fn, time, cost_fn, optim_vals)
   min_arg <- a1
-  #iterate over remaining actions
-  for (j in 2:length(actions)) {
-    a <- actions[j]
-    val <- get_expectation(states, s, a, prob_fn, time, cost_fn, optim_vals)
-    if (val < min_val) {
-      min_val <- val
-      min_arg <- a
+  if (length(actions) > 1) {
+    #iterate over remaining actions
+    for (j in 2:length(actions)) {
+      a <- actions[j]
+      val <- get_expectation(states, s, a, prob_fn, time, cost_fn, optim_vals)
+      if (val < min_val) {
+        min_val <- val
+        min_arg <- a
+      }
     }
   }
 
