@@ -158,7 +158,15 @@ get_expectation <- function(states, s, a, prob_fn, time, cost_fn, optim_vals) {
 
 check_compatible_set <-function(v) {
   if (length(v) != length(unique(v))) {
-    stop("v must have unique elements, try using unique()")
+    stop("sets must have unique elements. To see which paramters must be set-like,
+         use '?mdp' in the console. Vectors with nonunique elements can be fixed
+         using the 'unique()' function.")
+  }
+}
+
+check_compatible_horizon(h) {
+  if (h <= 1) {
+    stop("horizon must be greater than 1")
   }
 }
 
