@@ -33,7 +33,6 @@
 #'     \item output: \cr
 #'     final_cost - scalar
 #'     }
-#' @param initial_state state in states
 #' @param horizon integer greater than 1
 #'
 #' @return policy_fn function with \cr
@@ -47,7 +46,7 @@
 #' @export
 #'
 #' @examples
-mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, initial_state, horizon) {
+mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon) {
   optim_vals <- matrix(0, horizon, length(states))
   optim_args <- matrix(0, horizon - 1, length(states))
   for (j in 1:length(states)) {
