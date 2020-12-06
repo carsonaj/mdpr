@@ -7,12 +7,12 @@
 **Background:** 
 A Markov decision process (MDP) consists of:
 
-* a set of states, \cr
+* a set of states, 
 * a set of actions (decisions) such that in any given state, only a subset of 
-possible (allowed) actions may be taken, \cr
-* a cost function that takes as inputs the current the state, the allowed action taken in the current state and the subsequent state, which then outputs a cost amount\cr
-* a policy function that takes as input the current state and outputs an allowed action to take \cr
-* the transition probabilities between states which depend on the current state, the allowed action taken in the current state and the subsequent state and satisfy a Markov property. \cr
+possible (allowed) actions may be taken, 
+* a cost function that takes as inputs the current the state, the allowed action taken in the current state and the subsequent state, which then outputs a cost amount
+* a policy function that takes as input the current state and outputs an allowed action to take 
+* the transition probabilities between states which depend on the current state, the allowed action taken in the current state and the subsequent state and satisfy a Markov property. 
 
 **Goal:** 
 Find an optimal policy for a Markov decision process that minimizes the cost.
