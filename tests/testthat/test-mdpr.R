@@ -99,6 +99,26 @@ test_that("mdpr works", {
   #===================================================================================
 
   # test for mdp:
+
+  states <- 1:3
+  states1 <- c(1, 1, 2)
+  action_fn <- function(s) return(1:s)
+  prob_fn <- function(s1, a, s2) return(1)
+  cost_fn <- function(t, s1, a, s2) return(0)
+  final_cost_fn <- function(s) return(0)
+  horizon <- 2
+  horizon1 <- 1
+  horizon2 <- 2.1
+
+  expect_error(mdp(states1, action_fn, prob_fn, cost_fn, final_cost_fn, horizon),
+               "sets must have unique elements. To see which paramters must be set-like,
+         use '?mdp' in the console. Vectors with nonunique elements can be fixed
+         using the 'unique()' function.", fixed = T)
+  expect_error(mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon1),
+               "horizon must be an integer greater than 1", fixed = T)
+  expect_error(mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon2),
+               "horizon must be an integer greater than 1", fixed = T)
+
   states <- -2:2
   action_fn <- function(s) return(0:(2-s))
 
