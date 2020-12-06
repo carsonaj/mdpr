@@ -80,6 +80,12 @@
 #'
 #' policy_fn <- mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
 mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon) {
+  # compatibility check for states
+  check_compatible_set(states)
+
+  # compatibility check for horizon
+  check_compatible_horizon(horizon)
+
   # get optimal arguments
   optim <- get_optim(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
 
@@ -163,10 +169,12 @@ check_compatible_set <-function(v) {
          using the 'unique()' function.")
   }
 }
+#==========================================================================================
+#==========================================================================================
 
-check_compatible_horizon(h) {
-  if (h <= 1) {
-    stop("horizon must be greater than 1")
+check_compatible_horizon <- function(h) {
+  if ((h <= 1) || (h%%1 != 0)) {
+    stop("horizon must be an integer greater than 1")
   }
 }
 
