@@ -153,5 +153,13 @@ get_expectation <- function(states, s, a, prob_fn, time, cost_fn, optim_vals) {
 
   return(expected)
 }
+#==========================================================================================
+#==========================================================================================
+
+check_compatible_set <-function(v) {
+  if (length(v) != length(unique(v))) {
+    stop("v must have unique elements, try using unique()")
+  }
+}
 
 
