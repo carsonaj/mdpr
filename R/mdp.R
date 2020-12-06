@@ -2,12 +2,13 @@
 #'
 #' @usage mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
 #'
-#' @param states vector of states
+#' @param states vector of states (like a set, elements should not be repeated)
 #' @param action_fn function with\cr
 #'     \itemize{
 #'     \item input: \cr
 #'     current_state - state belonging to states\cr
-#'     \item output: actions - vector of allowed actions for current_state
+#'     \item output: actions - vector of allowed actions for current_state (like a
+#'     set, elements should not be repeated)
 #'     }
 #' @param prob_fn function with\cr
 #'     \itemize{
@@ -48,8 +49,10 @@
 #' @export
 #'
 #' @examples
-#' states <- -2:2
+#' # the following example is covered in more detail in the notes provided by
+#' # the link in the README.md file.
 #'
+#' states <- -2:2
 #' action_fn <- function(s) return(0:(2-s))
 #'
 #' # store probabilities to define prob_fn
