@@ -4,26 +4,92 @@
 \alias{mdp}
 \title{Policy minimizer for Markov decision processes via value iteration}
 \usage{
-mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, initial_state, horizon)
+mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
 }
 \arguments{
-\item{states}{- vector of states}
+\item{states}{vector of states (like a set, elements should not be repeated)}
 
-\item{action_fn}{- function with input: current_state - state and output: possible_actions - vector of actions}
+\item{action_fn}{function with\cr
+\itemize{
+\item input: \cr
+current_state - state belonging to states\cr
+\item output: actions - vector of allowed actions for current_state (like a
+set, elements should not be repeated)
+}}
 
-\item{prob_fn}{- function with input: (current_state - state, action_taken - action, next_state - state) and output: probability - double in 0 to 1}
+\item{prob_fn}{function with\cr
+\itemize{
+\item input: \cr
+current_state - state in states, \cr
+action_taken - action in actions,\cr
+next_state - state in states, \cr
+\item output: \cr
+probability - scalar in [0, 1]
+}}
 
-\item{cost_fn}{- function with input: (time - positive integer less than horizon, current_state - state, action_taken - action, next_state - state) and output: cost}
+\item{cost_fn}{function with\cr
+\itemize{
+\item input: \cr
+time - positive integer less than horizon,\cr
+current_state - state in states, \cr
+action_taken - action in actions, \cr
+next_state - state in states,
+\item output: \cr
+cost - scalar
+}}
 
-\item{final_cost_fn}{- function with input: current_state - state and output: final_cost - scalar}
+\item{final_cost_fn}{function with \cr
+\itemize{
+\item input: \cr
+current_state - state \cr
+\item output: \cr
+final_cost - scalar
+}}
 
-\item{initial_state}{- state}
-
-\item{horizon}{- positive integer}
+\item{horizon}{integer greater than 1}
 }
 \value{
-policy_fn - function, input: (time - positive integer less than horizon, current_state - state) and output: action_taken - action
+policy_fn function with \cr
+    \itemize{
+    \item input: \cr
+    time - positive integer less than horizon, \cr
+    current_state - state in states \cr
+    \item output: \cr
+    action_taken - action in actions
+    }
 }
 \description{
 Policy minimizer for Markov decision processes via value iteration
+}
+\examples{
+# the following example is covered in more detail in the notes provided by
+# the link in the README.md file.
+
+states <- -2:2
+action_fn <- function(s) return(0:(2-s))
+
+# store probabilities to define prob_fn
+probs <- array(0, dim = c(5, 5, 5))
+probs[1, 1, ] <- c(1, 0, 0, 0, 0)
+probs[2, 1, ] <- c(.9, .1, 0, 0, 0)
+probs[3, 1, ] <- c(.3, .6, .1, 0, 0)
+probs[4, 1, ] <- c(0, .3, .6, .1, 0)
+probs[5, 1, ] <- c(0, 0, .3, .6, .1)
+probs[1, 2, ] <- c(.9, .1, 0, 0, 0)
+probs[2, 2, ] <- c(.3, .6, .1, 0, 0)
+probs[3, 2, ] <- c(0, .3, .6, .1, 0)
+probs[4, 2, ] <- c(0, 0, .3, .6, .1)
+probs[1, 3, ] <- c(.3, .6, .1, 0, 0)
+probs[2, 3, ] <- c(0, .3, .6, .1, 0)
+probs[3, 3, ] <- c(0, 0, .3, .6, .1)
+probs[1, 4, ] <- c(0, .3, .6, .1, 0)
+probs[2, 4, ] <- c(0, 0, .3, .6, .1)
+probs[1, 5, ] <- c(0, 0, .3, .6, .1)
+
+prob_fn <- function(s1, a, s2) return(probs[s1 + 3, a + 1, s2 + 3])
+cost_fn <- function(t, s1, a, s2) return(a + 2 * max(0, s2) + 3 * max(0, -s2))
+final_cost_fn <- function(s) return(0)
+horizon <- 3
+
+policy_fn <- mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
 }
