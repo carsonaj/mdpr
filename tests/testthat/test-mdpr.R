@@ -1,5 +1,27 @@
 test_that("mdpr works", {
 
+  # test for check_compatible_set:
+  v1 <- 1:3
+  v2 <- c(1, 2, 2, 5, 9, 9)
+
+  expect_error(check_compatible_set(v1), NA)
+  expect_error(check_compatible_set(v2), "sets must have unique elements. To see which paramters must be set-like,
+         use '?mdp' in the console. Vectors with nonunique elements can be fixed
+         using the 'unique()' function.", fixed = T)
+  #===================================================================================
+  #===================================================================================
+
+  # test for check_compatible_horizon
+  h1 <- 4
+  h2 <- 1
+  h3 <- 3.1
+
+  expect_error(check_compatible_horizon(h1), NA)
+  expect_error(check_compatible_horizon(h2), "horizon must be an integer greater than 1", fixed = T)
+  expect_error(check_compatible_horizon(h3), "horizon must be an integer greater than 1", fixed = T)
+  #===================================================================================
+  #===================================================================================
+
   # test for get_expectation:
   states <- c(-1, 1)
   prob_fn <- function(s, a, sn) {
