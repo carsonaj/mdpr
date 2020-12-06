@@ -76,5 +76,37 @@ test_that("mdpr works", {
   #===================================================================================
   #===================================================================================
 
+  # test for mdp:
+  states <- -2:2
+  action_fn <- function(s) return(0:(2-s))
+
+  probs <- array(0, dim = c(5, 5, 5))
+  probs[1, 1, ] <- c(1, 0, 0, 0, 0)
+  probs[2, 1, ] <- c(.9, .1, 0, 0, 0)
+  probs[3, 1, ] <- c(.3, .6, .1, 0, 0)
+  probs[4, 1, ] <- c(0, .3, .6, .1, 0)
+  probs[5, 1, ] <- c(0, 0, .3, .6, .1)
+  probs[1, 2, ] <- c(.9, .1, 0, 0, 0)
+  probs[2, 2, ] <- c(.3, .6, .1, 0, 0)
+  probs[3, 2, ] <- c(0, .3, .6, .1, 0)
+  probs[4, 2, ] <- c(0, 0, .3, .6, .1)
+  probs[1, 3, ] <- c(.3, .6, .1, 0, 0)
+  probs[2, 3, ] <- c(0, .3, .6, .1, 0)
+  probs[3, 3, ] <- c(0, 0, .3, .6, .1)
+  probs[1, 4, ] <- c(0, .3, .6, .1, 0)
+  probs[2, 4, ] <- c(0, 0, .3, .6, .1)
+  probs[1, 5, ] <- c(0, 0, .3, .6, .1)
+
+  prob_fn <- function(s1, a, s2) return(probs[s1 + 3, a + 1, s2 + 3])
+  cost_fn <- function(t, s1, a, s2) return(a + 2 * max(0, s2) + 3 * max(0, -s2))
+  final_cost_fn <- function(s) return(0)
+  horizon <- 3
+
+  out_fn <- mdp(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
+  check1 <- 3
+  check2 <- 1
+
+  expect_equal(out_fn(2, -2), check1)
+  expect_equal(out_fn(1, 0), check2)
 
 })
