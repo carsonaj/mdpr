@@ -1,7 +1,7 @@
 Package: mdpr
 Type: Package
 Title: Calculate the minimal policy for a finite-horizon Markov decision process
-Version: 0.1.0
+Version: 1.0.0
 Author: person("Carson", "James", email = "carson.a.james@gmail.com", role = c("aut", "cre"))
 Maintainer: Carson James <carson.a.james@gmail.com>
 Description: Uses a dynamic programming algorithm known as "value iteration" to 
