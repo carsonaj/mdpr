@@ -1,5 +1,27 @@
 test_that("mdpr works", {
 
+  # test for check_compatible_time:
+  horizon <- 3
+  t1 <- 0
+  t2 <- 4
+  t3 <- 2
+
+  expect_error(check_compatible_time(t1, horizon), "time must be a positive integer less than horizon", fixed = T)
+  expect_error(check_compatible_time(t2, horizon), "time must be a positive integer less than horizon", fixed = T)
+  expect_error(check_compatible_time(t3, horizon), NA)
+  #===================================================================================
+  #===================================================================================
+
+  # test for check_compatible_state:
+  states <- 1:3
+  s1 <- 1
+  s2 <- 4
+
+  expect_error(check_compatible_state(s1, states), NA)
+  expect_error(check_compatible_state(s2, states), "current state must be in states", fixed = T)
+  #===================================================================================
+  #===================================================================================
+
   # test for check_compatible_set:
   v1 <- 1:3
   v2 <- c(1, 2, 2, 5, 9, 9)
