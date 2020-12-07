@@ -90,7 +90,11 @@ mdp <- function(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon) {
   optim <- get_optim(states, action_fn, prob_fn, cost_fn, final_cost_fn, horizon)
 
   # define policy function
-  policy_fn <- function(t, s) return(optim$optim_args[t, match(s, states)])
+  policy_fn <- function(t, s) {
+    check_compatible_time(t, horizon)
+    check_compatible_state(s, states)
+    return(optim$optim_args[t, match(s, states)])
+  }
 
   return(policy_fn)
 }
