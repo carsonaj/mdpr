@@ -50,7 +50,7 @@
 #'
 #' @examples
 #' # the following example is covered in more detail in these notes:
-#' https://github.com/carsonaj/Math/blob/master/Optimization/Markov%20Decision%20Processes.pdf
+#' # https://github.com/carsonaj/Math/blob/master/Optimization/Markov%20Decision%20Processes.pdf
 #'
 #' states <- -2:2
 #' action_fn <- function(s) return(0:(2-s))
