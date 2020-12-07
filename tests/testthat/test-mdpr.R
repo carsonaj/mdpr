@@ -172,5 +172,7 @@ test_that("mdpr works", {
 
   expect_equal(out_fn(2, -2), check1)
   expect_equal(out_fn(1, 0), check2)
+  expect_error(out_fn(0, 0), "time must be a positive integer less than horizon", fixed = T)
+  expect_error(out_fn(2, -3), "current state must be in states", fixed = T)
 
 })
