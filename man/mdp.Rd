@@ -62,8 +62,8 @@ policy_fn function with \cr
 Policy minimizer for Markov decision processes via value iteration
 }
 \examples{
-# the following example is covered in more detail in the notes provided by
-# the link in the README.md file.
+# the following example is covered in more detail in these notes:
+https://github.com/carsonaj/Math/blob/master/Optimization/Markov\%20Decision\%20Processes.pdf
 
 states <- -2:2
 action_fn <- function(s) return(0:(2-s))
